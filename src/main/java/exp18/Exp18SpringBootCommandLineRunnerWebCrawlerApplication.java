@@ -31,7 +31,6 @@ public class Exp18SpringBootCommandLineRunnerWebCrawlerApplication implements Co
 	@Override
 	public void run(String... args) throws Exception {
 		logger.info("BEF run");
-		// TODO call the crawler here
 		crawlerService.stayingAlive2BeeGees();
 		
 		List<Topic> topics2search = crawlerService.getTopics2search(url4topics);

@@ -81,6 +81,8 @@ public class CrawlerService {
 			for (Topic topic2search: topics2search) {
 				 topic = topic2search.topic;
 				 topicUrl = topic2search.topicUrl;
+				 //https://www.cochranelibrary.com/en/search?p_p_id=scolarissearchresultsportlet_WAR_scolarissearchresults&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_scolarissearchresultsportlet_WAR_scolarissearchresults_displayText=Cancer&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchText=Cancer&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchType=basic&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryField=topic_id&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchBy=13&_scolarissearchresultsportlet_WAR_scolarissearchresults_orderBy=displayDate-true&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetDisplayName=Cancer&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryTerm=z1209270504325056240433870825568&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetCategory=Topics
+//				 String topic2search = URLEncoder.encode(topic2searchRaw);
 				 
 				 Document doc = Jsoup.connect(topicUrl).get(); 			 
 				 // get urls
@@ -125,71 +127,8 @@ public class CrawlerService {
 		return topicDetails;
 	}
 	
-	public List<String> getTopicDetails_2(List<String> topics2search) throws IOException {
-		List<String> topicDetails = null;
-		
-		if (topics2search != null) {
-			topicDetails = new ArrayList<String>();
-			String url4search, topic2search, topic, url, title, author, date;
-			List<String> urls = new ArrayList<String>();
-			List<String> titles = new ArrayList<String>();
-			List<String> authors = new ArrayList<String>();
-			List<String> dates = new ArrayList<String>();
-
-			for (String topic2searchRaw: topics2search) {
-				topic2search = URLEncoder.encode(topic2searchRaw);
-				 //url4search = "https://www.cochranelibrary.com/en/search?_scolarissearchresultsportlet_WAR_scolarissearchresults_displayText=Cancer&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchText=Cancer&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchType=basic&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryField=topic_id&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchBy=13&_scolarissearchresultsportlet_WAR_scolarissearchresults_orderBy=displayDate-true&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetDisplayName=Cancer&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryTerm=z1209270504325056240433870825568&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetCategory=Topics";
-//				 url4search = "https://www.cochranelibrary.com/en/search?_scolarissearchresultsportlet_WAR_scolarissearchresults_displayText=" + topic2search + "&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchText=" + topic2search + "&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchType=basic&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryField=topic_id&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchBy=13&_scolarissearchresultsportlet_WAR_scolarissearchresults_orderBy=displayDate-true&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetDisplayName=" + topic2search + "&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryTerm=z1209270504325056240433870825568&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetCategory=Topics";
-				 url4search = "https://www.cochranelibrary.com/en/search?p_p_id=scolarissearchresultsportlet_WAR_scolarissearchresults&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_scolarissearchresultsportlet_WAR_scolarissearchresults_displayText=" + topic2search + "&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchText=" + topic2search + "&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchType=basic&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryField=topic_id&_scolarissearchresultsportlet_WAR_scolarissearchresults_searchBy=13&_scolarissearchresultsportlet_WAR_scolarissearchresults_orderBy=displayDate-true&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetDisplayName=" + topic2search + "&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetQueryTerm=z1209270504325056240433870825568&_scolarissearchresultsportlet_WAR_scolarissearchresults_facetCategory=Topics";
-				 
-				 Document doc = Jsoup.connect(url4search).get(); 			 
-				 // get urls
-				 Elements elements4url = doc.select(selector4url);
-				 logWarning4elementsIsEmpty_2(elements4url, topic2searchRaw, topic2search, url4search, selector4url);
-				 logger.info("--> found {} urls for topic2searchRaw:{}, topic2search:{}", elements4url.size(), topic2searchRaw, topic2search);
-				 for (Element element4url : elements4url) {  
-				    url = element4url.attr("href"); 
-					urls.add(url);
-				 }  
-				 // get titles
-				 Elements elements4title = doc.select(selector4title);  
-				 for (Element element4title : elements4title) {  
-				    title = element4title.text(); 
-					titles.add(title);
-				 }  
-				 // get authors
-				 Elements elements4author = doc.select(selector4author);  
-				 for (Element element4author : elements4author) {  
-				    author = element4author.text(); 
-					authors.add(author);
-				 }  
-				 // get dates
-				 Elements elements4date = doc.select(selector4date);  
-				 for (Element element4date : elements4date) {  
-				    date = element4date.text(); 
-					dates.add(date);
-				 }  
-				 
-			}					 
-			
-			// output the results
-			StringBuilder sb;
-			for (int i = 0; i < urls.size(); i++) {
-			   sb = new StringBuilder("URL:").append(urls.get(i)).append(", TITLE:").append(titles.get(i)).append(", AUTHOR:").append(authors.get(i)).append(", DATE:").append(dates.get(i));
-			   logger.debug(sb.toString());
-			   topicDetails.add(sb.toString());
-			}
-			logger.info(" EOF found {} results", topicDetails.size());
-		}
-		
-		return topicDetails;
-	}
-
 	private void logWarning4elementsIsEmpty(Elements elements, String topicUrl, String selector) {
 		 if (elements.isEmpty()) logger.warn("Empty elements for topicUrl:{}, selector:{}", topicUrl, selector);
-	}
-	private void logWarning4elementsIsEmpty_2(Elements elements, String topic2searchRaw, String topic2search, String url, String selector) {
-		 if (elements.isEmpty()) logger.warn("Empty elements for topic2searchRaw:{}, topic2search:{}, selector:{}, url:{}", topic2searchRaw, topic2search, selector, url);
 	}
 	
 	public void stayingAlive2BeeGees() {
