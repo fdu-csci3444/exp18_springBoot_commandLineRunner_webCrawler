@@ -4,8 +4,10 @@ url in src/resources/application.properties
 crawler.url.topics=https://www.cochranelibrary.com/cdsr/reviews/topics
 
 ## to clone the project
-cd <toWhereEverYouWantToClone>
+```bash
+cd toWhereEverYouWantToClone
 git clone https://github.com/fdu-csci3444/exp18_springBoot_commandLineRunner_webCrawler.git
+```
 
 ## to run with log level of debug
 - uncomment below line in src/resources/application.properties
@@ -23,10 +25,13 @@ logging.level.exp18=debug
 
 
 ## to build the self executable JAR of the project via maven in command line under target dir
-cd <whereEverTheProjectDirIs>
+```bash
+cd whereEverTheProjectDirIs
 mvn install
+```
 
 ## to run it from command line
-cd <whereEverTheProjectDirIs>
+```bash
+cd whereEverTheProjectDirIs
 java -jar target\exp18_springBoot_commandLineRunner_webCrawler-0.0.1-SNAPSHOT.jar
-
+```
